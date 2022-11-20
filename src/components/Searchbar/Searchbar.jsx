@@ -1,0 +1,1 @@
+import { SearchbarStyled } from "./SearchbarStyled";
