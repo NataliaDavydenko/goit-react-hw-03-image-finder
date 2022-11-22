@@ -14,16 +14,16 @@ export class Modal extends Component {
     }
   };
 
-    componentDidMount() {
-        window.addEventListener("keydown", this.handleKeyDown);
-        window.addEventListener('click', this.handleBackdropClick);
-    }
-    
-    componentWillUnmount() {
-        window.removeEventListener("keydown", this.handleKeyDown);
-        window.removeEventListener('click', this.handleBackdropClick);
-    }
-    
+  componentDidMount() {
+    window.addEventListener('keydown', this.handleKeyDown);
+    window.addEventListener('click', this.handleBackdropClick);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.handleKeyDown);
+    window.removeEventListener('click', this.handleBackdropClick);
+  }
+
   render() {
     return (
       <Overlay onClick={this.handleBackdropClick}>

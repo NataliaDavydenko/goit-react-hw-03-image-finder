@@ -47,8 +47,8 @@ export class App extends Component {
   };
 
   componentDidUpdate(_, prevState) {
-     if (prevState.gallery !== this.state.gallery) {
-       this.setState({ loading: false });
+    if (prevState.gallery !== this.state.gallery) {
+      this.setState({ loading: false });
     }
   }
 

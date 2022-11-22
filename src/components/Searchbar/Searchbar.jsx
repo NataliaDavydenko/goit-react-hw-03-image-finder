@@ -1,5 +1,5 @@
-import { SearchbarStyled } from "./SearchbarStyled";
+import { SearchbarStyled } from './SearchbarStyled';
 
-export const Searchbar = ({children}) => (
-    <SearchbarStyled>{children}</SearchbarStyled>
-)
+export const Searchbar = ({ children }) => (
+  <SearchbarStyled>{children}</SearchbarStyled>
+);

@@ -4,7 +4,6 @@ import { SearchFormStyled } from './SearchForm.styled';
 import { SearchFormInput } from './SearchFormInput/SearchFormInput';
 import { SearchFormButton } from './SearchFormButton/SearchFormButton';
 
-
 export class SearchForm extends Component {
   state = {
     inputText: '',

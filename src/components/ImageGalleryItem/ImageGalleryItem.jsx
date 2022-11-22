@@ -37,7 +37,9 @@ export class ImageGalleryItem extends Component {
             </ImageGalleryItemStyled>
           );
         })}
-            {this.state.showModal && (<Modal src={this.props.imageURL} onClose={this.showModal}/>)}
+        {this.state.showModal && (
+          <Modal src={this.props.imageURL} onClose={this.showModal} />
+        )}
       </>
     );
   }
