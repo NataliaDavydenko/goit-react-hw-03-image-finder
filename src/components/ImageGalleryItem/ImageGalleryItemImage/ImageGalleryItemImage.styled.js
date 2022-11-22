@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const ImageGalleryItemImage = styled.img`
+export const ImageGalleryItemImageStyled = styled.img`
   width: 100%;
   height: 260px;
   object-fit: cover;
