@@ -6,6 +6,7 @@ import { Searchbar } from './Searchbar/Searchbar';
 import { SearchForm } from './SearchForm/SearchForm';
 import { fetchImages } from '../services/imgApi';
 import { Loader } from './Loader/Loader';
+import { Modal } from './Modal/Modal';
 
 export class App extends Component {
   state = {
@@ -14,40 +15,49 @@ export class App extends Component {
     inputText: '',
     loading: false,
     total: null,
-    imageURL: null,
+    largeImageURL: null,
   };
 
   handleFormSubmit = inputText => {
     if (inputText.trim().length === 0) {
       return;
     }
-    this.setState({ inputText, loading: true });
-
-    fetchImages(inputText, this.state.page).then(data =>
-      this.setState({
-        gallery: [...data.hits],
-        total: data.totalHits,
-      })
-    );
+    this.setState({ inputText, gallery: [] });
   };
 
-  onClickLoadMoreBtn = async () => {
-    await this.setState(prevState => {
-      return { page: prevState.page + 1, loading: true };
+  onClickLoadMoreBtn = () => {
+    this.setState(prevState => {
+      return { page: prevState.page + 1 };
     });
-    fetchImages(this.state.inputText, this.state.page).then(data =>
-      this.setState(prevState => {
-        return { gallery: [...prevState.gallery, ...data.hits] };
-      })
+  };
+
+  showModalImg = largeImageURL => {
+    const item = this.state.gallery.find(
+      item => item.largeImageURL === largeImageURL
     );
+    this.setState({
+      showModal: {
+        largeImageURL: item.largeImageURL,
+        tags: item.tags,
+      },
+    });
   };
 
-  onClickGalleryImage = imageURL => {
-    this.setState({ imageURL });
+  closeModalImg = () => {
+    this.setState({ showModal: null });
   };
 
-  componentDidUpdate(_, prevState) {
-    if (prevState.gallery !== this.state.gallery) {
+  async componentDidUpdate(_, prevState) {
+    if (
+      prevState.inputText !== this.state.inputText ||
+      prevState.page !== this.state.page
+    ) {
+      this.setState({ loading: true });
+        await fetchImages(this.state.inputText, this.state.page).then(data =>
+          this.setState(prevState => {
+            return { gallery: [...prevState.gallery, ...data.hits] };
+          })
+        );
       this.setState({ loading: false });
     }
   }
@@ -62,8 +72,7 @@ export class App extends Component {
           <>
             <ImageGallery
               gallery={this.state.gallery}
-              onClick={this.onClickGalleryImage}
-              imageURL={this.state.imageURL}
+              openModal={this.showModalImg} 
             />
             {this.state.total !== this.state.gallery.length && (
               <Button text="Load more" onClick={this.onClickLoadMoreBtn} />
@@ -71,6 +80,13 @@ export class App extends Component {
           </>
         )}
         {this.state.loading && <Loader />}
+        {this.state.showModal && (
+          <Modal
+            largeImageUrl={this.state.showModal.largeImageURL}
+            tags={this.state.showModal.tags}
+            closeModal={this.closeModalImg}
+          />
+        )}
       </AppStyled>
     );
   }

@@ -4,31 +4,29 @@ import { Component } from 'react';
 export class Modal extends Component {
   handleKeyDown = event => {
     if (event.code === 'Escape') {
-      this.props.onClose();
+      this.props.closeModal();
     }
   };
 
   handleBackdropClick = event => {
     if (event.target === event.currentTarget) {
-      this.props.onClose();
+      this.props.closeModal();
     }
   };
 
   componentDidMount() {
     window.addEventListener('keydown', this.handleKeyDown);
-    window.addEventListener('click', this.handleBackdropClick);
   }
 
   componentWillUnmount() {
     window.removeEventListener('keydown', this.handleKeyDown);
-    window.removeEventListener('click', this.handleBackdropClick);
   }
 
   render() {
     return (
       <Overlay onClick={this.handleBackdropClick}>
         <ModalStyled>
-          <img src={this.props.src} alt="" />
+          <img src={this.props.largeImageUrl} alt={this.props.tags} />
         </ModalStyled>
       </Overlay>
     );
