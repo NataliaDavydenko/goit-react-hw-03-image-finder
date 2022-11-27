@@ -55,7 +55,7 @@ export class App extends Component {
       this.setState({ loading: true });
         await fetchImages(this.state.inputText, this.state.page).then(data =>
           this.setState(prevState => {
-            return { gallery: [...prevState.gallery, ...data.hits] };
+            return { gallery: [...prevState.gallery, ...data.hits], total: data.totalHits };
           })
         );
       this.setState({ loading: false });
@@ -74,7 +74,7 @@ export class App extends Component {
               gallery={this.state.gallery}
               openModal={this.showModalImg} 
             />
-            {this.state.total !== this.state.gallery.length && (
+            {this.state.gallery.length < this.state.total && (
               <Button text="Load more" onClick={this.onClickLoadMoreBtn} />
             )}
           </>
